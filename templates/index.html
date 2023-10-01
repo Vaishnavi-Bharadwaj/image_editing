@@ -1,0 +1,124 @@
+<!--The below html code skeleton is got by the bootstrap docs online and the title and heading of your choice is given-->
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Editing- Edit your images</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+  <!--the navbar code skeleton is got from the bootstrap navbar docs online-->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Image Editing</a>
+      <!--/ is for getting the home page as soon as somebody clicks the link-->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a> <!--home page-->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+            <!--redirected to the about page when About is clicked. Complete the /about route in the flask-->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">How to use</a>
+            <!--redirected to the documentation page when About is clicked. Complete the /howtouse route in the flask-->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">Contact Us</a>
+            <!--redirected to the about page when About is clicked. Complete the /contact route in the flask-->
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+
+        </ul>
+        <!--instead of form class, div class is used where search bar is replaced by login and signup-->
+        <div class="d-flex" role="search">
+          <button class="btn btn-outline-success mx-1" type="submit">Login</button>
+          <!--here mx-1 refers to the margin or the space between login and signup buttons-->
+          <button class="btn btn-outline-success mx-1" type="submit">SignUp</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!--this is available from the flashing with categories documentation-->
+  <!--remove the ul tag-->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+    <!--this div is got from the dismissing alerts section of the bootstrap to make the message look pretty-->
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <!-- | safe is used to render it in the html form otherwise the anchor tag will be displayed to the user-->
+      <strong>Success!</strong> {{ message | safe}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <!--the navbar code ends here-->
+  <!--create a div container and place the heading inside it-->
+  <div class="container">
+    <h1 class="fs-2 txt">Image Editing - Edit your images</h1>
+    <!--create a class for the h1 to increase its size by usinf fs-any number txt-->
+
+    <!--edit specifies the URL to which the form data will be sent when the user submits the form
+            post specifies the HTTP method that will be used to submit the form data
+            multipart/form-data encoding type is often used when the form includes file uploads, as it allows binary data (such as files) to be included in the form submission.-->
+    <form action="/edit" method="post" enctype="multipart/form-data">
+
+      <!--this div tag is got from the file input section of bootstrap which enables the user to choose files-->
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Select image</label>
+        <input class="form-control" type="file" name="file" id="formFile">
+        <!--name="file" should be mentioned which means that when the user selects a file using this input element and submits the form, the file's data will be sent to the server with the name "file." 
+                  In a server-side script or application, you can then access this file data using the "file" name.
+                  In flask  you might retrieve the uploaded file using the "file" name like this: file = request.files['file']-->
+      </div>
+
+      <!--selects is got from the bootstrap which is used to get the drop down list which is placed inside the mb-3 to get the margins or spacing between the selects and submit button-->
+      <div class="mb-3">
+        <div class="form-floating">
+          <!--name attribute in the <select> element is used to identify and send the selected value(s) associated with that <select> element when the form is submitted, making it an essential part of form handling in HTML.-->
+          <select name="operation" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <!--change the option values and the labels as per your wish-->
+            <option selected>Choose an operation</option>
+            <option value="cgray">Convert to Grayscale</option>
+          </select>
+          <label for="floatingSelect">Select an editing operation</label>
+        </div>
+      </div>
+      <!--add a submit button from bootstrap after giving an option to choose the operation but change the type to submit -->
+      <button type="submit" class="btn btn-success">Submit</button>
+
+
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
